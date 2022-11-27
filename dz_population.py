@@ -55,23 +55,25 @@ class Forest_boy():
     def control(self, rabbits, plants, fox):
         return True if rabbits.count * 7 < plants.count and fox.count * 3 < rabbits.count else False
 
-    def is_add_plants_or_rabbits(self, rabbits, plants, fox):
+    def is_add_plants(self, rabbits, plants):
         if not self.control(rabbits, plants, fox):
             print("rabbits:", rabbits.count, "plants:", plants.count)
-            count_plants = int(input("how many plants add?"))
+            count_plants = int(input("Сколько добавить растений?\n"))
             plants.count += count_plants
+
+    def is_add_rabbits(self, rabbits, fox):
         if not self.control(rabbits, plants, fox):
             print("rabbits:", rabbits.count, "fox:", fox.count)
-            count_rabbits = int(input("how many rabbit add?"))
+            count_rabbits = int(input("сколько добавить кроликов?\n"))
             rabbits.count += count_rabbits
 
 
-plants = Plants(80, 20)
-rabbits = Rabbits(10, 10)
-fox = Fox(4, 2)
+plants = Plants(20, 20)
+rabbits = Rabbits(10, 5)
+fox = Fox(7, 2)
 forest_boy = Forest_boy()
 year = 1
-while year < 10:
+while year < 5:
     print("year:", year)
     print("plants:", plants.info_population())
     print("rabbits:", rabbits.info_population())
@@ -81,11 +83,12 @@ while year < 10:
     fox.year_after()
     rabbits.fox_food(fox)
     plants.rabbits_food(rabbits)
-    forest_boy.is_add_plants_or_rabbits(rabbits, plants, fox)
+    forest_boy.is_add_plants(rabbits, plants)
+    forest_boy.is_add_rabbits(rabbits, fox)
     if plants.count <= 0:
-        print("популяция растений умерло")
+        print("популяция растений погибла")
         break
     if rabbits.count <= 0:
-        print("популяция кроликов умерло")
+        print("популяция кроликов погибла")
         break
     year += 1
